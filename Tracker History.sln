@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracker History", "Tracker History\Tracker History.csproj", "{E41EC4E5-79C4-46F7-9293-6C49C4C835D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracker History Tests", "Tracker History Tests\Tracker History Tests.csproj", "{E8FFF2E3-6A2C-4CB5-B77C-FF62A71B7D13}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E41EC4E5-79C4-46F7-9293-6C49C4C835D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E41EC4E5-79C4-46F7-9293-6C49C4C835D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E41EC4E5-79C4-46F7-9293-6C49C4C835D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E41EC4E5-79C4-46F7-9293-6C49C4C835D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8FFF2E3-6A2C-4CB5-B77C-FF62A71B7D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8FFF2E3-6A2C-4CB5-B77C-FF62A71B7D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8FFF2E3-6A2C-4CB5-B77C-FF62A71B7D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8FFF2E3-6A2C-4CB5-B77C-FF62A71B7D13}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
