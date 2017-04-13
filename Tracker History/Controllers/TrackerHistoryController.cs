@@ -56,10 +56,13 @@ namespace Tracker_History.Controllers {
 
                            if (trackerDevice.History != null) {
                               foreach (TrackerHistoryTrackerDeviceHistory deviceHistory in trackerDevice.History) {
-                                 updater.AddTrackerHistory(devid, deviceHistory);
+                                 int histid = updater.AddTrackerHistory(devid, deviceHistory);
+
+                                 if (deviceHistory.Additional != null) {
+                                    updater.AddTrackerHistoryAdditional(histid, deviceHistory.Additional);
+                                 }
                               }
                            }
-
                         }
                      }
 

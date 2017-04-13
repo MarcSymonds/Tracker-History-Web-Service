@@ -53,11 +53,22 @@ namespace Tracker_History_Tests {
 
       }
 
+      private string getTestData2() {
+         return @"<TrackerHistory>
+            <Application guid=""c8eb0580-e362-410a-a69a-06fc0f520713"" xname=""MyPhone"" imei=""123456"" />
+            <TrackerDevice guid = ""3f0566b4-caad-450c-bbe2-f1bd4763d802"" name=""Kimmy the dog"" imei=""838729109381938"" telephoneNumber=""1234"" isMyLocation=""true"">
+               <History whenRecorded=""2017-03-02T12:30:30"" latitude=""52.1233450"" longitude=""-9.3729272"" isGps=""true"">
+                  <Additional lac=""5c3e"" cid=""0001"" message=""Hello World"" />
+               </History>
+            </TrackerDevice>
+         </TrackerHistory>";
+      }
+
       [TestMethod]
       public void TestTrackerHistoryClass() {
          XmlSerializer serializer = new XmlSerializer(typeof(TrackerHistory));
 
-         string testData = getTestData();
+         string testData = getTestData2();
 
          using (TextReader reader = new StringReader(testData)) {
             TrackerHistory result = (TrackerHistory)serializer.Deserialize(reader);
@@ -172,7 +183,7 @@ namespace Tracker_History_Tests {
          httpClient.DefaultRequestHeaders.Accept.Clear();
          httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
 
-         string data = getTestData();
+         string data = getTestData2();
 
          SaveHistory(data).Wait();
       }

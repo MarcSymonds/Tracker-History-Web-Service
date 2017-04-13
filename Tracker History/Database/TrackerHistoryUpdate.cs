@@ -17,6 +17,7 @@ namespace Tracker_History.Database {
       private MySqlCommand cmdUpdateApplication = null;
       private MySqlCommand cmdUpdateTrackerDevice = null;
       private MySqlCommand cmdAddTrackerHistory = null;
+      private MySqlCommand cmdAddTrackerHistoryAdditional = null;
 
       public TrackerHistoryUpdate(MySqlConnection conn, MySqlTransaction trans) {
          dbConn = conn;
@@ -81,6 +82,24 @@ namespace Tracker_History.Database {
          return cmdAddTrackerHistory;
       }
 
+      private MySqlCommand buildAddTrackerHistoryAdditionalCmd() {
+         if (cmdAddTrackerHistoryAdditional == null) {
+            cmdAddTrackerHistoryAdditional = new MySqlCommand("add_tracker_history_additional", dbConn, dbTrans);
+            cmdAddTrackerHistoryAdditional.CommandType = CommandType.StoredProcedure;
+
+            cmdAddTrackerHistoryAdditional.Parameters.Add("$tracker_history_id", MySqlDbType.Int32);
+            cmdAddTrackerHistoryAdditional.Parameters.Add("$lac", MySqlDbType.VarChar, 6);
+            cmdAddTrackerHistoryAdditional.Parameters.Add("$cid", MySqlDbType.VarChar, 6);
+            cmdAddTrackerHistoryAdditional.Parameters.Add("$last_known_longitude", MySqlDbType.Double);
+            cmdAddTrackerHistoryAdditional.Parameters.Add("$last_known_latitude", MySqlDbType.Double);
+            cmdAddTrackerHistoryAdditional.Parameters.Add("$message", MySqlDbType.VarChar, 50);
+
+            cmdAddTrackerHistoryAdditional.Parameters.Add("$id", MySqlDbType.Int32).Direction = ParameterDirection.Output;
+         }
+
+         return cmdAddTrackerHistoryAdditional;
+
+      }
       public int UpdateApplication(TrackerHistoryApplication application) {
          MySqlCommand cmd = cmdUpdateApplication ?? buildUpdateApplicationCmd();
 
@@ -113,9 +132,38 @@ namespace Tracker_History.Database {
 
          cmd.Parameters["$device_id"].Value = deviceID;
          cmd.Parameters["$time_recorded"].Value = history.whenRecorded;
-         cmd.Parameters["$longitude"].Value = history.longitude;
-         cmd.Parameters["$latitude"].Value = history.latitude;
-         cmd.Parameters["$gps"].Value = history.isGps ? 1 : 0;
+         if (history.longitude != 0.0 || history.latitude != 0.0) {
+            cmd.Parameters["$longitude"].Value = history.longitude;
+            cmd.Parameters["$latitude"].Value = history.latitude;
+            cmd.Parameters["$gps"].Value = history.isGps ? 1 : 0;
+         }
+         else {
+            cmd.Parameters["$longitude"].Value = null;
+            cmd.Parameters["$latitude"].Value = null;
+            cmd.Parameters["$gps"].Value = null;
+         }
+
+         cmd.ExecuteNonQuery();
+
+         return (int)cmd.Parameters["$id"].Value;
+      }
+
+      public int AddTrackerHistoryAdditional(int historyID, TrackerHistoryTrackerDeviceHistoryAdditional additional) {
+         MySqlCommand cmd = cmdAddTrackerHistoryAdditional ?? buildAddTrackerHistoryAdditionalCmd();
+
+         cmd.Parameters["$tracker_history_id"].Value = historyID;
+         cmd.Parameters["$lac"].Value = additional.lac;
+         cmd.Parameters["$cid"].Value = additional.cid;
+         if (additional.lastKnownLongitude != 0.0 || additional.lastKnownLatitude != 0.0) {
+            cmd.Parameters["$last_known_longitude"].Value = additional.lastKnownLongitude;
+            cmd.Parameters["$last_known_latitude"].Value = additional.lastKnownLatitude;
+         }
+         else {
+            cmd.Parameters["$last_known_longitude"].Value = null;
+            cmd.Parameters["$last_known_latitude"].Value = null;
+
+         }
+         cmd.Parameters["$message"].Value = additional.message;
 
          cmd.ExecuteNonQuery();
 

@@ -7,7 +7,10 @@ using System.Web;
    <TrackerHistory>
       <Application guid="1234-5678" name="MyPhone" imei="123456" />
       <TrackerDevice guid="1234-9876" name="Tracker Device" imei="123987" telephoneNumber="1234" isMyLocation="false">
-         <History whenRecorded="2017-03-01 12:30:30" latitude="52.1233445" longitude="-9.3729272" isGps="true" />
+         <History whenRecorded="2017-03-01 12:30:30" latitude="52.1233445" longitude="-9.3729272" isGps="true" >
+            <Additional lac="1234" cid="1234" lastKnownLongitude="1.012" lastKnownLatitude="2.12" message="Hello World" />
+            </History>
+
          <History whenRecorded="2017-03-01 12:30:30" latitude="52.1233445" longitude="-9.3729272" isGps="true" />
          <History whenRecorded="2017-03-01 12:30:30" latitude="52.1233445" longitude="-9.3729272" isGps="true" />
          <History whenRecorded="2017-03-01 12:30:30" latitude="52.1233445" longitude="-9.3729272" isGps="true" />
@@ -194,9 +197,10 @@ namespace Tracker_History.Classes {
    /// <remarks/>
    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
    public class TrackerHistoryTrackerDeviceHistory {
+      private TrackerHistoryTrackerDeviceHistoryAdditional additionalField;
       private DateTime whenRecordedField;
-      private decimal latitudeField;
-      private decimal longitudeField;
+      private double latitudeField;
+      private double longitudeField;
       private bool isGpsField;
 
       public override string ToString() {
@@ -206,6 +210,16 @@ namespace Tracker_History.Classes {
             longitudeField,
             isGpsField
             );
+      }
+
+      /// <remarks/>
+      public TrackerHistoryTrackerDeviceHistoryAdditional Additional {
+         get {
+            return this.additionalField;
+         }
+         set {
+            this.additionalField = value;
+         }
       }
 
       /// <remarks/>
@@ -221,7 +235,7 @@ namespace Tracker_History.Classes {
 
       /// <remarks/>
       [System.Xml.Serialization.XmlAttributeAttribute()]
-      public decimal latitude {
+      public double latitude {
          get {
             return this.latitudeField;
          }
@@ -232,7 +246,7 @@ namespace Tracker_History.Classes {
 
       /// <remarks/>
       [System.Xml.Serialization.XmlAttributeAttribute()]
-      public decimal longitude {
+      public double longitude {
          get {
             return this.longitudeField;
          }
@@ -249,6 +263,71 @@ namespace Tracker_History.Classes {
          }
          set {
             this.isGpsField = value;
+         }
+      }
+   }
+
+   /// <remarks/>
+   [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+   public partial class TrackerHistoryTrackerDeviceHistoryAdditional {
+      private string lacField;
+      private string cidField;
+      private double lastKnownLongitudeField;
+      private double lastKnownLatitudeField;
+      private string messageField;
+
+      /// <remarks/>
+      [System.Xml.Serialization.XmlAttributeAttribute()]
+      public string lac {
+         get {
+            return this.lacField;
+         }
+         set {
+            this.lacField = value;
+         }
+      }
+
+      /// <remarks/>
+      [System.Xml.Serialization.XmlAttributeAttribute()]
+      public string cid {
+         get {
+            return this.cidField;
+         }
+         set {
+            this.cidField = value;
+         }
+      }
+
+      /// <remarks/>
+      [System.Xml.Serialization.XmlAttributeAttribute()]
+      public double lastKnownLongitude {
+         get {
+            return this.lastKnownLongitudeField;
+         }
+         set {
+            this.lastKnownLongitudeField = value;
+         }
+      }
+
+      /// <remarks/>
+      [System.Xml.Serialization.XmlAttributeAttribute()]
+      public double lastKnownLatitude {
+         get {
+            return this.lastKnownLatitudeField;
+         }
+         set {
+            this.lastKnownLatitudeField = value;
+         }
+      }
+
+      /// <remarks/>
+      [System.Xml.Serialization.XmlAttributeAttribute()]
+      public string message {
+         get {
+            return this.messageField;
+         }
+         set {
+            this.messageField = value;
          }
       }
    }
